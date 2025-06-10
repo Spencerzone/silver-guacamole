@@ -3,127 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Report Comment Generator</title>
+  <title>Student Report Generator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background-color: #f4f4f4;
+      max-width: 800px;
+      margin: auto;
     }
-    .section {
+    h2 {
+      margin-top: 30px;
+    }
+    .category {
       margin-bottom: 20px;
     }
-    .trait-buttons button {
+    .buttons button {
       margin: 5px;
-      padding: 10px 15px;
+      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      background-color: #fff;
+      background-color: #f0f0f0;
       cursor: pointer;
     }
-    .trait-buttons button.selected {
-      background-color: #8ecae6;
+    .buttons button.selected {
+      background-color: #4caf50;
+      color: white;
     }
-    #reportBox {
-      border: 1px solid #ccc;
-      padding: 15px;
-      background-color: #fff;
-      min-height: 100px;
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-top: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
-  <h1>Student Report Comment Generator</h1>
-  <div class="section">
-    <label>Name: <input type="text" id="studentName"></label>
-    <label>Gender:
-      <select id="studentGender">
-        <option value="they">They</option>
-        <option value="he">He</option>
-        <option value="she">She</option>
-      </select>
-    </label>
-  </div>
+  <h1>Student Report Generator</h1>
+  
+  <label>Teacher's Name:</label>
+  <input type="text" id="teacherName">
 
-  <div class="section">
-    <label>Topic Unit Name: <input type="text" id="unitName"></label>
-    <label>Assessment Task Name: <input type="text" id="taskName"></label>
-    <label>Mark (%): <input type="number" id="mark" min="0" max="100"></label>
-  </div>
+  <label>Student Gender:</label>
+  <select id="gender">
+    <option value="they">They</option>
+    <option value="he">He</option>
+    <option value="she">She</option>
+  </select>
 
-  <div class="section">
-    <h3>Personality Traits</h3>
-    <div class="trait-buttons" id="traits">
-      <button data-text="hardworking">Hardworking</button>
-      <button data-text="curious">Curious</button>
-      <button data-text="independent">Independent</button>
-      <button data-text="thoughtful">Thoughtful</button>
-      <button data-text="resilient">Resilient</button>
+  <label>Topic Unit Name:</label>
+  <input type="text" id="unit">
+
+  <label>Assessment Task Name:</label>
+  <input type="text" id="task">
+
+  <label>Assessment Task Mark (%):</label>
+  <input type="text" id="mark">
+
+  <div class="category">
+    <h2>Achievement</h2>
+    <div class="buttons" id="achievement">
+      <button data-value="demonstrates a strong understanding">Strong Understanding</button>
+      <button data-value="needs support to consolidate core concepts">Needs Support</button>
+      <button data-value="has shown improvement over the course">Improved Over Time</button>
     </div>
   </div>
 
-  <div class="section">
-    <h3>Positive Behaviours</h3>
-    <div class="trait-buttons" id="positive">
-      <button data-text="engages actively in class discussions">Engages in discussions</button>
-      <button data-text="submits tasks on time">Submits tasks on time</button>
-      <button data-text="collaborates well with peers">Collaborates well</button>
+  <div class="category">
+    <h2>Engagement</h2>
+    <div class="buttons" id="engagement">
+      <button data-value="is highly engaged during lessons">Highly Engaged</button>
+      <button data-value="participates well in class discussions">Participates Well</button>
+      <button data-value="benefits from improved focus">Needs More Focus</button>
     </div>
   </div>
 
-  <div class="section">
-    <h3>Areas for Improvement</h3>
-    <div class="trait-buttons" id="improvement">
-      <button data-text="review marking guidelines before submitting work">Review marking guidelines</button>
-      <button data-text="focus on consolidating concepts through revision">Focus on revision</button>
-      <button data-text="contribute more consistently in class discussions">More consistent contribution</button>
+  <div class="category">
+    <h2>Behaviour</h2>
+    <div class="buttons" id="behaviour">
+      <button data-value="behaves respectfully towards peers and staff">Respectful</button>
+      <button data-value="demonstrates leadership qualities">Leadership</button>
+      <button data-value="should work on self-regulation">Needs Regulation</button>
     </div>
   </div>
 
-  <div class="section">
-    <button onclick="generateComment()">Generate Comment</button>
-  </div>
-
-  <div class="section">
-    <h3>Generated Comment</h3>
-    <div id="reportBox"></div>
-  </div>
+  <button onclick="generateComment()">Generate Report Comment</button>
+  <textarea id="reportComment" readonly></textarea>
 
   <script>
-    document.querySelectorAll('.trait-buttons button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('selected');
+    // Toggle selected class on button click
+    document.querySelectorAll('.buttons').forEach(group => {
+      group.addEventListener('click', e => {
+        if (e.target.tagName === 'BUTTON') {
+          e.target.classList.toggle('selected');
+        }
       });
     });
 
-    function getSelectedTexts(sectionId) {
-      return Array.from(document.querySelectorAll(`#${sectionId} .selected`)).map(btn => btn.dataset.text);
+    function getSelectedValues(id) {
+      return [...document.querySelectorAll(`#${id} button.selected`)].map(btn => btn.dataset.value);
     }
 
     function generateComment() {
-      const name = document.getElementById('studentName').value.trim();
-      const gender = document.getElementById('studentGender').value;
-      const unit = document.getElementById('unitName').value.trim();
-      const task = document.getElementById('taskName').value.trim();
-      const mark = document.getElementById('mark').value.trim();
-
-      const traits = getSelectedTexts('traits');
-      const positive = getSelectedTexts('positive');
-      const improvement = getSelectedTexts('improvement');
+      const teacher = document.getElementById('teacherName').value;
+      const gender = document.getElementById('gender').value;
+      const unit = document.getElementById('unit').value;
+      const task = document.getElementById('task').value;
+      const mark = document.getElementById('mark').value;
+      const a = getSelectedValues('achievement');
+      const e = getSelectedValues('engagement');
+      const b = getSelectedValues('behaviour');
 
       const pronoun = gender;
-      const nameOrPronoun = name || 'The student';
-      
-      const traitSentence = `${nameOrPronoun} is ${traits.join(", ")}.`;
-      const achievementSentence = `${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)} has demonstrated a strong level of achievement in the ${unit} unit, achieving ${mark}% in the ${task}.`;
-      const positiveSentence = positive.length ? `${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)} is doing well in that ${positive.join(", ")}.` : '';
-      const improvementSentence = improvement.length ? `To improve, ${pronoun} should ${improvement.join(", ")}.` : '';
+      const capPronoun = pronoun.charAt(0).toUpperCase() + pronoun.slice(1);
 
-      const comment = [traitSentence, achievementSentence, positiveSentence, improvementSentence]
-        .filter(s => s)
-        .join(' ');
+      let comment = `${capPronoun} ${b.join(', ')}. `;
+      comment += `${capPronoun} achieved ${mark}% in the "${task}" for the unit "${unit}", demonstrating that ${a.join(', ')}. `;
+      comment += `Currently, ${pronoun} ${e.join(', ')}. To continue developing in Science, ${pronoun} should continue building on these behaviours and consolidate their understanding through regular revision and engagement with feedback.`;
 
-      document.getElementById('reportBox').textContent = comment;
+      // Trim and limit to 1000 characters
+      if (comment.length > 1000) comment = comment.slice(0, 997) + '...';
+
+      document.getElementById('reportComment').value = comment;
     }
   </script>
 </body>
