@@ -47,9 +47,12 @@
 </head>
 <body>
   <h1>Student Report Generator</h1>
-  
+
   <label>Teacher's Name:</label>
   <input type="text" id="teacherName">
+
+  <label>Student's Name:</label>
+  <input type="text" id="studentName">
 
   <label>Student Gender:</label>
   <select id="gender">
@@ -57,6 +60,9 @@
     <option value="he">He</option>
     <option value="she">She</option>
   </select>
+
+  <label>Subject Name:</label>
+  <input type="text" id="subject">
 
   <label>Topic Unit Name:</label>
   <input type="text" id="unit">
@@ -68,29 +74,52 @@
   <input type="text" id="mark">
 
   <div class="category">
+    <h2>Personality Traits</h2>
+    <div class="buttons" id="personality">
+      <button data-value="is a diligent and conscientious learner">Diligent</button>
+      <button data-value="brings a positive attitude to class">Positive Attitude</button>
+      <button data-value="shows great curiosity and enthusiasm">Curious</button>
+      <button data-value="is resilient and persistent">Resilient</button>
+    </div>
+  </div>
+
+  <div class="category">
     <h2>Achievement</h2>
     <div class="buttons" id="achievement">
-      <button data-value="demonstrates a strong understanding">Strong Understanding</button>
-      <button data-value="needs support to consolidate core concepts">Needs Support</button>
-      <button data-value="has shown improvement over the course">Improved Over Time</button>
+      <button data-value="demonstrates a strong understanding of content">Strong Understanding</button>
+      <button data-value="needs support to consolidate key concepts">Needs Support</button>
+      <button data-value="has shown consistent improvement">Consistent Improvement</button>
+      <button data-value="applies critical thinking effectively">Critical Thinking</button>
     </div>
   </div>
 
   <div class="category">
     <h2>Engagement</h2>
     <div class="buttons" id="engagement">
-      <button data-value="is highly engaged during lessons">Highly Engaged</button>
-      <button data-value="participates well in class discussions">Participates Well</button>
-      <button data-value="benefits from improved focus">Needs More Focus</button>
+      <button data-value="is highly engaged in classroom activities">Highly Engaged</button>
+      <button data-value="participates actively in discussions">Participates Actively</button>
+      <button data-value="remains focused during tasks">Focused</button>
+      <button data-value="could benefit from greater focus">Needs Focus</button>
     </div>
   </div>
 
   <div class="category">
     <h2>Behaviour</h2>
     <div class="buttons" id="behaviour">
-      <button data-value="behaves respectfully towards peers and staff">Respectful</button>
-      <button data-value="demonstrates leadership qualities">Leadership</button>
-      <button data-value="should work on self-regulation">Needs Regulation</button>
+      <button data-value="behaves respectfully and cooperatively">Respectful</button>
+      <button data-value="displays leadership in group work">Leadership</button>
+      <button data-value="could improve time management">Time Management</button>
+      <button data-value="should continue developing self-regulation">Self-Regulation</button>
+    </div>
+  </div>
+
+  <div class="category">
+    <h2>Skills</h2>
+    <div class="buttons" id="skills">
+      <button data-value="demonstrates strong research skills">Research</button>
+      <button data-value="shows clear and logical writing">Writing</button>
+      <button data-value="uses technology effectively to enhance learning">Technology Use</button>
+      <button data-value="collaborates well with peers">Collaboration</button>
     </div>
   </div>
 
@@ -98,7 +127,6 @@
   <textarea id="reportComment" readonly></textarea>
 
   <script>
-    // Toggle selected class on button click
     document.querySelectorAll('.buttons').forEach(group => {
       group.addEventListener('click', e => {
         if (e.target.tagName === 'BUTTON') {
@@ -113,22 +141,26 @@
 
     function generateComment() {
       const teacher = document.getElementById('teacherName').value;
+      const student = document.getElementById('studentName').value;
       const gender = document.getElementById('gender').value;
+      const subject = document.getElementById('subject').value;
       const unit = document.getElementById('unit').value;
       const task = document.getElementById('task').value;
       const mark = document.getElementById('mark').value;
-      const a = getSelectedValues('achievement');
-      const e = getSelectedValues('engagement');
-      const b = getSelectedValues('behaviour');
+      const traits = getSelectedValues('personality');
+      const achievements = getSelectedValues('achievement');
+      const engagements = getSelectedValues('engagement');
+      const behaviours = getSelectedValues('behaviour');
+      const skills = getSelectedValues('skills');
 
       const pronoun = gender;
       const capPronoun = pronoun.charAt(0).toUpperCase() + pronoun.slice(1);
 
-      let comment = `${capPronoun} ${b.join(', ')}. `;
-      comment += `${capPronoun} achieved ${mark}% in the "${task}" for the unit "${unit}", demonstrating that ${a.join(', ')}. `;
-      comment += `Currently, ${pronoun} ${e.join(', ')}. To continue developing in Science, ${pronoun} should continue building on these behaviours and consolidate their understanding through regular revision and engagement with feedback.`;
+      let comment = `${student} ${traits.join(', ')}. `;
+      comment += `${capPronoun} is currently studying ${subject} and achieved ${mark}% in the assessment task "${task}" within the unit "${unit}", showing that ${achievements.join(', ')}. `;
+      comment += `${student} ${engagements.join(', ')}, and ${behaviours.join(', ')}. `;
+      comment += `In addition, ${pronoun} ${skills.join(', ')}. To continue progressing, ${student.toLowerCase()} is encouraged to maintain positive habits and address areas identified for improvement.`;
 
-      // Trim and limit to 1000 characters
       if (comment.length > 1000) comment = comment.slice(0, 997) + '...';
 
       document.getElementById('reportComment').value = comment;
