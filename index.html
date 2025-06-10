@@ -1,12 +1,138 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Webpage</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Report Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      margin-top: 30px;
+    }
+    .category {
+      margin-bottom: 20px;
+    }
+    .buttons button {
+      margin: 5px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+    .buttons button.selected {
+      background-color: #4caf50;
+      color: white;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-top: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <p>This is my GitHub Pages site.</p>
+  <h1>Student Report Generator</h1>
+  
+  <label>Teacher's Name:</label>
+  <input type="text" id="teacherName">
+
+  <label>Student Gender:</label>
+  <select id="gender">
+    <option value="they">They</option>
+    <option value="he">He</option>
+    <option value="she">She</option>
+  </select>
+
+  <label>Topic Unit Name:</label>
+  <input type="text" id="unit">
+
+  <label>Assessment Task Name:</label>
+  <input type="text" id="task">
+
+  <label>Assessment Task Mark (%):</label>
+  <input type="text" id="mark">
+
+  <div class="category">
+    <h2>Achievement</h2>
+    <div class="buttons" id="achievement">
+      <button data-value="demonstrates a strong understanding">Strong Understanding</button>
+      <button data-value="needs support to consolidate core concepts">Needs Support</button>
+      <button data-value="has shown improvement over the course">Improved Over Time</button>
+    </div>
+  </div>
+
+  <div class="category">
+    <h2>Engagement</h2>
+    <div class="buttons" id="engagement">
+      <button data-value="is highly engaged during lessons">Highly Engaged</button>
+      <button data-value="participates well in class discussions">Participates Well</button>
+      <button data-value="benefits from improved focus">Needs More Focus</button>
+    </div>
+  </div>
+
+  <div class="category">
+    <h2>Behaviour</h2>
+    <div class="buttons" id="behaviour">
+      <button data-value="behaves respectfully towards peers and staff">Respectful</button>
+      <button data-value="demonstrates leadership qualities">Leadership</button>
+      <button data-value="should work on self-regulation">Needs Regulation</button>
+    </div>
+  </div>
+
+  <button onclick="generateComment()">Generate Report Comment</button>
+  <textarea id="reportComment" readonly></textarea>
+
+  <script>
+    // Toggle selected class on button click
+    document.querySelectorAll('.buttons').forEach(group => {
+      group.addEventListener('click', e => {
+        if (e.target.tagName === 'BUTTON') {
+          e.target.classList.toggle('selected');
+        }
+      });
+    });
+
+    function getSelectedValues(id) {
+      return [...document.querySelectorAll(`#${id} button.selected`)].map(btn => btn.dataset.value);
+    }
+
+    function generateComment() {
+      const teacher = document.getElementById('teacherName').value;
+      const gender = document.getElementById('gender').value;
+      const unit = document.getElementById('unit').value;
+      const task = document.getElementById('task').value;
+      const mark = document.getElementById('mark').value;
+      const a = getSelectedValues('achievement');
+      const e = getSelectedValues('engagement');
+      const b = getSelectedValues('behaviour');
+
+      const pronoun = gender;
+      const capPronoun = pronoun.charAt(0).toUpperCase() + pronoun.slice(1);
+
+      let comment = `${capPronoun} ${b.join(', ')}. `;
+      comment += `${capPronoun} achieved ${mark}% in the "${task}" for the unit "${unit}", demonstrating that ${a.join(', ')}. `;
+      comment += `Currently, ${pronoun} ${e.join(', ')}. To continue developing in Science, ${pronoun} should continue building on these behaviours and consolidate their understanding through regular revision and engagement with feedback.`;
+
+      // Trim and limit to 1000 characters
+      if (comment.length > 1000) comment = comment.slice(0, 997) + '...';
+
+      document.getElementById('reportComment').value = comment;
+    }
+  </script>
 </body>
 </html>
