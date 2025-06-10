@@ -17,17 +17,22 @@
     .category {
       margin-bottom: 20px;
     }
-    .buttons button {
+    .buttons button,
+    .gender-button {
       margin: 5px;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
       background-color: #f0f0f0;
       cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
-    .buttons button.selected {
-      background-color: #4caf50;
-      color: white;
+    .buttons button.selected,
+    .gender-button.selected {
+      background-color: #1976d2;
+      color: #fff;
+      border-color: #0d47a1;
+      font-weight: bold;
     }
     textarea {
       width: 100%;
@@ -48,18 +53,39 @@
 <body>
   <h1>Student Report Generator</h1>
 
-  <label>Teacher's Name:</label>
-  <input type="text" id="teacherName">
-
   <label>Student's Name:</label>
   <input type="text" id="studentName">
 
   <label>Student Gender:</label>
-  <select id="gender">
-    <option value="they">They</option>
-    <option value="he">He</option>
-    <option value="she">She</option>
-  </select>
+  <div class="buttons" id="genderButtons">
+    <button data-value="he" class="gender-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="9" cy="9" r="4"/>
+    <path d="M14 4h6v6"/>
+    <path d="M20 4l-6 6"/>
+  </svg>
+  He
+</button>
+    <button data-value="she" class="gender-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="8" r="4"/>
+    <line x1="12" y1="12" x2="12" y2="20"/>
+    <line x1="9" y1="17" x2="15" y2="17"/>
+  </svg>
+  She
+</button>
+    <button data-value="they" class="gender-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="8" r="4"/>
+    <line x1="12" y1="12" x2="12" y2="20"/>
+    <line x1="9" y1="17" x2="15" y2="17"/>
+    <path d="M16 2l4 4"/>
+    <path d="M20 2l-4 4"/>
+  </svg>
+  They
+</button>
+  </div>
+  <input type="hidden" id="gender" value="they">
 
   <label>Subject Name:</label>
   <input type="text" id="subject">
@@ -86,10 +112,11 @@
   <div class="category">
     <h2>Achievement</h2>
     <div class="buttons" id="achievement">
-      <button data-value="demonstrates a strong understanding of content">Strong Understanding</button>
-      <button data-value="needs support to consolidate key concepts">Needs Support</button>
-      <button data-value="has shown consistent improvement">Consistent Improvement</button>
-      <button data-value="applies critical thinking effectively">Critical Thinking</button>
+      <button data-value="demonstrated outstanding achievement">A: Outstanding</button>
+      <button data-value="achieved excellent results">B: Excellent</button>
+      <button data-value="is meeting expectations">C: Meeting Expectations</button>
+      <button data-value="demonstrated basic understanding">D: Basic</button>
+      <button data-value="has shown limited understanding">E: Limited</button>
     </div>
   </div>
 
@@ -127,10 +154,26 @@
   <textarea id="reportComment" readonly></textarea>
 
   <script>
+    // Gender button toggle (radio-style)
+    document.querySelectorAll('#genderButtons .gender-button').forEach(btn => {
+      btn.addEventListener('click', e => {
+        document.querySelectorAll('#genderButtons .gender-button').forEach(b => b.classList.remove('selected'));
+        e.target.classList.add('selected');
+        document.getElementById('gender').value = e.target.dataset.value;
+      });
+    });
+
+    // Multi-select buttons
     document.querySelectorAll('.buttons').forEach(group => {
+      const isSingleSelect = group.id === 'achievement';
       group.addEventListener('click', e => {
-        if (e.target.tagName === 'BUTTON') {
-          e.target.classList.toggle('selected');
+        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('gender-button')) {
+          if (isSingleSelect) {
+            group.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+            e.target.classList.add('selected');
+          } else {
+            e.target.classList.toggle('selected');
+          }
         }
       });
     });
@@ -139,8 +182,11 @@
       return [...document.querySelectorAll(`#${id} button.selected`)].map(btn => btn.dataset.value);
     }
 
+    function toSentenceCase(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
     function generateComment() {
-      const teacher = document.getElementById('teacherName').value;
       const student = document.getElementById('studentName').value;
       const gender = document.getElementById('gender').value;
       const subject = document.getElementById('subject').value;
@@ -158,8 +204,8 @@
 
       let comment = `${student} ${traits.join(', ')}. `;
       comment += `${capPronoun} is currently studying ${subject} and achieved ${mark}% in the assessment task ${task} within the unit ${unit}, showing that ${achievements.join(', ')}. `;
-      comment += `${student} ${engagements.join(', ')}, and ${behaviours.join(', ')}. `;
-      comment += `In addition, ${pronoun} ${skills.join(', ')}. To continue progressing, ${student.toLowerCase()} is encouraged to maintain positive habits and address areas identified for improvement.`;
+      comment += `${toSentenceCase(student)} ${engagements.join(', ')}, and ${behaviours.join(', ')}. `;
+      comment += `In addition, ${pronoun} ${skills.join(', ')}. To continue progressing, ${toSentenceCase(student)} is encouraged to maintain positive habits and address areas identified for improvement.`;
 
       if (comment.length > 1000) comment = comment.slice(0, 997) + '...';
 
