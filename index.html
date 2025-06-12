@@ -122,11 +122,11 @@
 <div class="category" id="achievement">
   <h2>Achievement Level</h2>
   <div class="buttons">
-    <button data-value="performed at an outstanding level (Grade A)">A: Outstanding</button>
-    <button data-value="achieved excellent results (Grade B)">B: Excellent</button>
-    <button data-value="is meeting expectations (Grade C)">C: Meeting expectations</button>
-    <button data-value="showed a basic understanding (Grade D)">D: Basic</button>
-    <button data-value="demonstrated limited understanding (Grade E)">E: Limited</button>
+    <button data-value="performed at an outstanding level">A: Outstanding</button>
+    <button data-value="achieved excellent results">B: Excellent</button>
+    <button data-value="is meeting expectations">C: Meeting expectations</button>
+    <button data-value="showed a basic understanding">D: Basic</button>
+    <button data-value="demonstrated limited understanding">E: Limited</button>
   </div>
 </div>
 
@@ -198,9 +198,13 @@
 </div>
 
   <div class="comment-section">
-    <textarea id="reportComment" rows="6" cols="100" readonly placeholder="Generated comment will appear here..."></textarea>
     <div class="comment-buttons">
       <button onclick="generateComment()">Generate Comment</button>
+ 
+    </div>
+    <textarea id="reportComment" rows="6" cols="100" readonly placeholder="Generated comment will appear here..."></textarea>
+    <div class="comment-buttons">
+
       <button onclick="copyComment()">Copy Comment to Clipboard</button>
       <button onclick="resetStudent()">Reset Student Info</button>
       <button onclick="resetAllFields()">Reset All</button>
@@ -232,9 +236,8 @@
       const behaviour = getSelectedValues("behaviour").join(", ");
       const attendance = getSelectedValues("attendance").join(", ");
 
-      let comment = `${name} ${personality ? personality + ", " : ""}${engagement ? engagement + ", " : ""}${behaviour ? behaviour + ", " : ""}and ${attendance || ""}. `;
-      comment += `${pronoun} is currently studying ${subject} and recently completed the ${unit} unit. `;
-      comment += `${pronoun} achieved ${mark}% in the ${task}, and ${achievement || "showed a sound understanding of key concepts"}. `;
+      let comment = `${name} ${personality ? personality + ", " : ""} in ${subject}.${engagement ? engagement + ", " : ""}${behaviour ? behaviour + ", " : ""}and ${attendance || ""}. `;
+      comment += `During the ${unit} unit, ${pronoun} achieved ${mark}% in the ${task}, and ${achievement || "showed they have an expected level of knowledge and understanding"}. `;
       comment += `${pronoun} ${tasks}. `;
       if (strengths) comment += `${pronoun} ${strengths}. `;
       if (improvement) comment += `${pronoun} ${improvement}. `;
