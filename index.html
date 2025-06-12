@@ -8,236 +8,271 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      max-width: 800px;
-      margin: auto;
     }
-    h2 {
-      margin-top: 30px;
+    .input-group {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
     }
     .category {
       margin-bottom: 20px;
     }
-    .buttons button,
-    .gender-button {
+    .buttons button, .gender-button {
       margin: 5px;
-      padding: 10px;
+      padding: 8px 12px;
       border: 1px solid #ccc;
-      border-radius: 5px;
       background-color: #f0f0f0;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
-    .buttons button.selected,
-    .gender-button.selected {
-      background-color: #1976d2;
-      color: #fff;
-      border-color: #0d47a1;
+    .buttons button.selected, .gender-button.selected {
+      background-color: #007BFF;
+      color: white;
       font-weight: bold;
     }
-    textarea {
-      width: 100%;
-      height: 150px;
-      margin-top: 20px;
+    .comment-section {
+      margin-top: 30px;
     }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input[type="text"], select {
+    #reportComment {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
+      margin: 10px 0;
+    }
+    .comment-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .comment-buttons button {
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .comment-buttons button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
   <h1>Student Report Generator</h1>
 
-  <label>Student's Name:</label>
-  <input type="text" id="studentName">
-
-  <label>Student Gender:</label>
-  <div class="buttons" id="genderButtons">
-    <button data-value="he" class="gender-button">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="9" cy="9" r="4"/>
-    <path d="M14 4h6v6"/>
-    <path d="M20 4l-6 6"/>
-  </svg>
-  He
-</button>
-    <button data-value="she" class="gender-button">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="12" cy="8" r="4"/>
-    <line x1="12" y1="12" x2="12" y2="20"/>
-    <line x1="9" y1="17" x2="15" y2="17"/>
-  </svg>
-  She
-</button>
-    <button data-value="they" class="gender-button">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="12" cy="8" r="4"/>
-    <line x1="12" y1="12" x2="12" y2="20"/>
-    <line x1="9" y1="17" x2="15" y2="17"/>
-    <path d="M16 2l4 4"/>
-    <path d="M20 2l-4 4"/>
-  </svg>
-  They
-</button>
+  <div class="input-group">
+    <label for="studentName">Student Name:</label>
+    <input type="text" id="studentName">
   </div>
-  <input type="hidden" id="gender" value="they">
-
-  <label>Subject Name:</label>
-  <input type="text" id="subject">
-
-  <label>Topic Unit Name:</label>
-  <input type="text" id="unit">
-
-  <label>Assessment Task Name:</label>
-  <input type="text" id="task">
-
-  <label>Assessment Task Mark (%):</label>
-  <input type="text" id="mark">
+  <div class="input-group">
+    <label for="subject">Subject Name:</label>
+    <input type="text" id="subject">
+  </div>
+  <div class="input-group">
+    <label for="unit">Topic Unit Name:</label>
+    <input type="text" id="unit">
+  </div>
+  <div class="input-group">
+    <label for="task">Assessment Task Name:</label>
+    <input type="text" id="task">
+  </div>
+  <div class="input-group">
+    <label for="mark">Assessment Mark:</label>
+    <input type="number" id="mark">
+  </div>
 
   <div class="category">
+    <h2>Gender</h2>
+    <div id="genderButtons">
+      <button class="gender-button" data-value="he">He</button>
+      <button class="gender-button" data-value="she">She</button>
+      <button class="gender-button" data-value="they">They</button>
+    </div>
+    <input type="hidden" id="gender" value="they">
+  </div>
+
+<!-- Full category blocks should be inserted here -->
+
+<div class="category" id="personality">
   <h2>Personality Traits</h2>
-  <div class="buttons" id="personality">
-    <button data-value="is a diligent and conscientious learner">Diligent</button>
-    <button data-value="brings a positive attitude to class">Positive Attitude</button>
-    <button data-value="shows great curiosity and enthusiasm">Curious</button>
-    <button data-value="is resilient and persistent">Resilient</button>
-    <button data-value="demonstrates empathy and kindness">Empathetic</button>
-    <button data-value="has a strong sense of justice and fairness">Fair</button>
-    <button data-value="demonstrates a growth mindset">Growth Mindset</button>
-    <button data-value="is self-reflective and seeks improvement">Self-Reflective</button>
+  <div class="buttons">
+    <button data-value="is resilient and persistent">Resilient and persistent</button>
+    <button data-value="demonstrates a growth mindset">Growth mindset</button>
+    <button data-value="is reflective and self-aware">Reflective and self-aware</button>
+    <button data-value="shows curiosity about the world">Curious</button>
+    <button data-value="demonstrates empathy and kindness">Empathetic and kind</button>
+    <button data-value="is enthusiastic and energetic">Enthusiastic</button>
+    <button data-value="displays maturity beyond their years">Mature</button>
+    <button data-value="is open to feedback and learning">Open to feedback</button>
   </div>
 </div>
 
-<div class="category">
+<div class="category" id="engagement">
   <h2>Engagement</h2>
-  <div class="buttons" id="engagement">
-    <button data-value="is consistently engaged in class activities">Consistently engaged</button>
-    <button data-value="is generally attentive during lessons">Generally attentive</button>
-    <button data-value="is occasionally distracted in class">Occasionally distracted</button>
-    <button data-value="is rarely focused on tasks">Rarely focused</button>
-    <button data-value="demonstrates self-motivation">Demonstrates self-motivation</button>
-    <button data-value="relies on teacher prompts to remain engaged">Relies on teacher prompts</button>
-    <button data-value="actively participates in class discussions">Actively participates in class discussions</button>
+  <div class="buttons">
+    <button data-value="consistently engaged">Consistently engaged</button>
+    <button data-value="generally attentive">Generally attentive</button>
+    <button data-value="occasionally distracted">Occasionally distracted</button>
+    <button data-value="rarely focused">Rarely focused</button>
+    <button data-value="demonstrates self-motivation">Self-motivated</button>
+    <button data-value="relies on teacher prompts">Relies on prompts</button>
+    <button data-value="actively participates in class discussions">Participates in discussions</button>
   </div>
 </div>
 
-
-  <div class="category">
+<div class="category" id="achievement">
   <h2>Achievement Level</h2>
-  <div class="buttons" id="achievement">
-    <button data-value="demonstrated outstanding achievement (Grade A)">A: Outstanding</button>
+  <div class="buttons">
+    <button data-value="performed at an outstanding level (Grade A)">A: Outstanding</button>
     <button data-value="achieved excellent results (Grade B)">B: Excellent</button>
     <button data-value="is meeting expectations (Grade C)">C: Meeting expectations</button>
-    <button data-value="demonstrated basic understanding (Grade D)">D: Basic</button>
-    <button data-value="has shown limited understanding (Grade E)">E: Limited</button>
+    <button data-value="showed a basic understanding (Grade D)">D: Basic</button>
+    <button data-value="demonstrated limited understanding (Grade E)">E: Limited</button>
   </div>
 </div>
-  
 
-  <div class="category">
-    <h2>Engagement</h2>
-    <div class="buttons" id="engagement">
-  <button data-value="is highly engaged in classroom activities">Highly Engaged</button>
-  <button data-value="participates actively in discussions">Participates Actively</button>
-  <button data-value="remains focused during tasks">Focused</button>
-  <button data-value="could benefit from greater focus">Needs Focus</button>
-  <button data-value="completes tasks independently and on time">Self-Directed</button>
-  <button data-value="asks insightful questions">Inquisitive</button>
-  <button data-value="demonstrates enthusiasm for learning">Enthusiastic</button>
-</div>
-  </div>
-
-  <div class="category">
-    <h2>Behaviour</h2>
-    <div class="buttons" id="behaviour">
-  <button data-value="behaves respectfully and cooperatively">Respectful</button>
-  <button data-value="displays leadership in group work">Leadership</button>
-  <button data-value="could improve time management">Time Management</button>
-  <button data-value="should continue developing self-regulation">Self-Regulation</button>
-  <button data-value="sets a positive example for peers">Role Model</button>
-  <button data-value="responds well to feedback">Receptive to Feedback</button>
-</div>
-  </div>
-
-  <div class="category">
+<div class="category" id="tasks">
   <h2>Assessment Task Performance</h2>
-  <div class="buttons" id="tasks">
-    <button data-value="performed strongly across all tasks">Performed strongly across all tasks</button>
-    <button data-value="demonstrated improvement in later tasks">Demonstrated improvement in later tasks</button>
-    <button data-value="submitted all tasks on time">Submitted all tasks on time</button>
-    <button data-value="had incomplete or missing assessments">Incomplete or missing assessments</button>
-    <button data-value="struggled with examination conditions">Struggled with examination conditions</button>
-    <button data-value="submitted a portfolio that lacked required detail">Portfolio lacked required detail</button>
+  <div class="buttons">
+    <button data-value="performed strongly across all tasks">Strong performance overall</button>
+    <button data-value="demonstrated improvement in later tasks">Improved over time</button>
+    <button data-value="submitted all tasks on time">Submitted on time</button>
+    <button data-value="had incomplete or missing assessments">Incomplete/missing work</button>
+    <button data-value="struggled with examination conditions">Struggled in exams</button>
+    <button data-value="produced a portfolio that lacked required detail">Portfolio lacked detail</button>
   </div>
 </div>
 
-<div class="category">
+<div class="category" id="strengths">
   <h2>Strengths</h2>
-  <div class="buttons" id="strengths">
-    <button data-value="demonstrates strong analytical skills">Strong analytical skills</button>
-    <button data-value="communicates ideas effectively">Effective communication of ideas</button>
-    <button data-value="shows creative and original thinking">Creative and original thinking</button>
-    <button data-value="is competent in practical tasks">Competent in practical tasks</button>
-    <button data-value="demonstrates safe workshop practices">Demonstrates safe workshop practices</button>
-    <button data-value="works well independently and in groups">Works well independently and in groups</button>
+  <div class="buttons">
+    <button data-value="demonstrates strong analytical skills">Analytical skills</button>
+    <button data-value="communicates ideas effectively">Effective communication</button>
+    <button data-value="shows creative and original thinking">Creative thinking</button>
+    <button data-value="is competent in practical tasks">Practical competence</button>
+    <button data-value="demonstrates safe workshop practices">Safe practices</button>
+    <button data-value="works well both independently and collaboratively">Independent and collaborative</button>
   </div>
 </div>
 
-<div class="category">
+<div class="category" id="improvement">
   <h2>Areas for Improvement</h2>
-  <div class="buttons" id="improvement">
-    <button data-value="needs to plan and manage time more effectively">Needs to plan and manage time more effectively</button>
-    <button data-value="should use more precise subject-specific vocabulary">Should use more precise subject-specific vocabulary</button>
-    <button data-value="needs to follow instructions more carefully">Needs to follow instructions more carefully</button>
-    <button data-value="should revise more thoroughly using scaffolds">Should revise more thoroughly using scaffolds</button>
-    <button data-value="could benefit from teacher feedback before submission">Could benefit from teacher feedback before submission</button>
+  <div class="buttons">
+    <button data-value="needs to plan and manage time more effectively">Time management</button>
+    <button data-value="should use more precise subject-specific vocabulary">Vocabulary use</button>
+    <button data-value="needs to follow instructions more carefully">Following instructions</button>
+    <button data-value="should revise more thoroughly using scaffolds">Revision practices</button>
+    <button data-value="could benefit from teacher feedback before submission">Use of feedback</button>
   </div>
 </div>
 
-<div class="category">
+<div class="category" id="strategies">
   <h2>Improvement Strategies</h2>
-  <div class="buttons" id="strategies">
-    <button data-value="engage with marking criteria and feedback">Engage with marking criteria and feedback</button>
-    <button data-value="attend regularly and participate consistently">Attend regularly and participate consistently</button>
-    <button data-value="complete all learning tasks to the best of their ability">Complete all learning tasks to the best of their ability</button>
-    <button data-value="make better use of editing processes">Make better use of editing processes</button>
-    <button data-value="revise concepts through summary notes and practice questions">Revise concepts through summary notes and practice questions</button>
+  <div class="buttons">
+    <button data-value="engage with marking criteria and feedback">Engage with criteria</button>
+    <button data-value="attend regularly and participate consistently">Regular participation</button>
+    <button data-value="complete all learning tasks to the best of their ability">Complete learning tasks</button>
+    <button data-value="make better use of editing processes">Editing processes</button>
+    <button data-value="revise concepts through summary notes and practice questions">Use of revision tools</button>
   </div>
 </div>
 
-<div class="category">
+<div class="category" id="behaviour">
   <h2>Behaviour and Co-operation</h2>
-  <div class="buttons" id="behaviour">
-    <button data-value="is well-mannered and respectful">Well-mannered and respectful</button>
+  <div class="buttons">
+    <button data-value="is well-mannered and respectful">Respectful</button>
     <button data-value="works well with peers">Works well with peers</button>
-    <button data-value="often distracts others">Often distracts others</button>
-    <button data-value="is helpful and supportive in group tasks">Helpful and supportive in group tasks</button>
-    <button data-value="requires reminders to stay on task">Requires reminders to stay on task</button>
+    <button data-value="often distracts others">Distracts others</button>
+    <button data-value="is helpful and supportive in group tasks">Supportive in groups</button>
+    <button data-value="requires reminders to stay on task">Needs redirection</button>
   </div>
 </div>
 
-<div class="category">
+<div class="category" id="attendance">
   <h2>Attendance</h2>
-  <div class="buttons" id="attendance">
-    <button data-value="has excellent attendance">Excellent attendance</button>
-    <button data-value="has occasional absences impacting progress">Occasional absences impacting progress</button>
-    <button data-value="has low attendance and missed key concepts">Low attendance – missed key concepts</button>
-    <button data-value="has extremely low attendance and could not be assessed">Extremely low attendance – unable to assess</button>
+  <div class="buttons">
+    <button data-value="has excellent attendance">Excellent</button>
+    <button data-value="has occasional absences impacting progress">Occasional absences</button>
+    <button data-value="has low attendance and missed key concepts">Low attendance</button>
+    <button data-value="has extremely low attendance and was unable to be properly assessed">Extremely low attendance</button>
   </div>
 </div>
 
-
-  <button onclick="generateComment()">Generate Report Comment</button>
-  <textarea id="reportComment" readonly placeholder="Generated comment will appear here..."></textarea>
-<button onclick="copyComment()">Copy to Clipboard</button>
+  <div class="comment-section">
+    <textarea id="reportComment" rows="6" cols="100" readonly placeholder="Generated comment will appear here..."></textarea>
+    <div class="comment-buttons">
+      <button onclick="generateComment()">Generate Comment</button>
+      <button onclick="copyComment()">Copy Comment to Clipboard</button>
+      <button onclick="resetStudent()">Reset Student Info</button>
+      <button onclick="resetAllFields()">Reset All</button>
+    </div>
+  </div>
 
   <script>
-    // Gender button toggle (radio-style)
+    function getSelectedValues(id) {
+      return [...document.querySelectorAll(`#${id} .selected`)].map(btn => btn.dataset.value);
+    }
+
+    function generateComment() {
+      const name = document.getElementById("studentName").value.trim();
+      const gender = document.getElementById("gender").value;
+      const subject = document.getElementById("subject").value.trim();
+      const unit = document.getElementById("unit").value.trim();
+      const task = document.getElementById("task").value.trim();
+      const mark = document.getElementById("mark").value.trim();
+
+      const pronoun = gender === "he" ? "He" : gender === "she" ? "She" : "They";
+
+      const personality = getSelectedValues("personality").join(", ");
+      const engagement = getSelectedValues("engagement").join(", ");
+      const achievement = getSelectedValues("achievement").join(", ");
+      const tasks = getSelectedValues("tasks").join(", ");
+      const strengths = getSelectedValues("strengths").join(", ");
+      const improvement = getSelectedValues("improvement").join(", ");
+      const strategies = getSelectedValues("strategies").join(", ");
+      const behaviour = getSelectedValues("behaviour").join(", ");
+      const attendance = getSelectedValues("attendance").join(", ");
+
+      let comment = `${name} ${personality ? personality + ", " : ""}${engagement ? engagement + ", " : ""}${behaviour ? behaviour + ", " : ""}and ${attendance || ""}. `;
+      comment += `${pronoun} is currently studying ${subject} and recently completed the ${unit} unit. `;
+      comment += `${pronoun} achieved ${mark}% in the ${task}, and ${achievement || "showed a sound understanding of key concepts"}. `;
+      comment += `${pronoun} ${tasks}. `;
+      if (strengths) comment += `${pronoun} ${strengths}. `;
+      if (improvement) comment += `${pronoun} ${improvement}. `;
+      if (strategies) comment += `${pronoun} is encouraged to ${strategies}.`;
+
+      document.getElementById("reportComment").value = comment;
+    }
+
+    function resetSelections() {
+      document.querySelectorAll('.buttons button.selected').forEach(btn => btn.classList.remove('selected'));
+      document.getElementById('gender').value = 'they';
+      document.querySelectorAll('#genderButtons .gender-button').forEach(b => b.classList.remove('selected'));
+    }
+
+    function resetStudent() {
+      document.getElementById('studentName').value = '';
+      document.getElementById('mark').value = '';
+      resetSelections();
+      document.getElementById('reportComment').value = '';
+    }
+
+    function resetAllFields() {
+      document.getElementById('studentName').value = '';
+      document.getElementById('subject').value = '';
+      document.getElementById('unit').value = '';
+      document.getElementById('task').value = '';
+      document.getElementById('mark').value = '';
+      resetSelections();
+      document.getElementById('reportComment').value = '';
+    }
+
+    function copyComment() {
+      const comment = document.getElementById("reportComment").value;
+      navigator.clipboard.writeText(comment).then(() =>
+        alert("Comment copied to clipboard!")
+      );
+    }
+
     document.querySelectorAll('#genderButtons .gender-button').forEach(btn => {
       btn.addEventListener('click', e => {
         document.querySelectorAll('#genderButtons .gender-button').forEach(b => b.classList.remove('selected'));
@@ -246,58 +281,13 @@
       });
     });
 
-    // Multi-select buttons
     document.querySelectorAll('.buttons').forEach(group => {
-      const isSingleSelect = group.id === 'achievement';
       group.addEventListener('click', e => {
-        if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('gender-button')) {
-          if (isSingleSelect) {
-            group.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
-            e.target.classList.add('selected');
-          } else {
-            e.target.classList.toggle('selected');
-          }
+        if (e.target.tagName === 'BUTTON') {
+          e.target.classList.toggle('selected');
         }
       });
     });
-
-    function getSelectedValues(id) {
-      return [...document.querySelectorAll(`#${id} button.selected`)].map(btn => btn.dataset.value);
-    }
-
-    function toSentenceCase(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    }
-
-    function generateComment() {
-  const student = document.getElementById('studentName').value.trim();
-  const gender = document.getElementById('gender').value;
-  const subject = document.getElementById('subject').value.trim();
-  const unit = document.getElementById('unit').value.trim();
-  const task = document.getElementById('task').value.trim();
-  const mark = document.getElementById('mark').value.trim();
-  const traits = getSelectedValues('personality');
-  const achievements = getSelectedValues('achievement');
-  const engagements = getSelectedValues('engagement');
-  const behaviours = getSelectedValues('behaviour');
-  const skills = getSelectedValues('skills');
-
-  const pronoun = gender;
-  const capPronoun = pronoun.charAt(0).toUpperCase() + pronoun.slice(1);
-  const name = toSentenceCase(student);
-
-  let comment = `${name} ${traits.join(', ')}. `;
-  comment += `${capPronoun} is currently studying ${subject} and achieved ${mark}% in the assessment task ${task} within the unit ${unit}, demonstrating that ${achievements.join(', ')}. `;
-  comment += `${name} ${engagements.join(', ')}, and ${behaviours.join(', ')}. `;
-  comment += `In addition, ${pronoun} ${skills.join(', ')}. To continue progressing, ${name} is encouraged to maintain positive habits and address areas identified for improvement.`;
-
-  if (comment.length > 1000) comment = comment.slice(0, 997) + '...';
-  document.getElementById('reportComment').value = comment.trim();
-    }
-  function copyComment() {
-  const comment = document.getElementById('reportComment').value;
-  navigator.clipboard.writeText(comment).then(() => alert('Comment copied to clipboard!'));
-}
-</script>
+  </script>
 </body>
 </html>
