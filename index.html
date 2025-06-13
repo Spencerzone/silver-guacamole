@@ -172,7 +172,9 @@
     <button data-value="attend regularly and participate consistently">Regular participation</button>
     <button data-value="complete all learning tasks to the best of their ability">Complete learning tasks</button>
     <button data-value="make better use of editing processes">Editing processes</button>
-    <button data-value="revise concepts through summary notes and practice questions">Use of revision tools</button>
+    <button data-value="revise concepts through summary scaffolds and practice questions">Use of revision tools</button>
+    <button data-value="evaluate knowledge and understanding through completing practise exam-style questions">Practice exam-style questions</button>
+    <button data-value="evaluate knowledge and understanding through completing past-HSC questions">Practice past-HSC questions</button>
   </div>
 </div>
 
@@ -196,12 +198,15 @@
     <button data-value="has extremely low attendance and was unable to be properly assessed">Extremely low attendance</button>
   </div>
 </div>
-
+<div class="input-group">
+  <label for="additionalNotes">Additional Notes:</label>
+  <input type="text" id="additionalNotes" placeholder="Add extra comments or information here...">
+</div>
   <div class="comment-section">
     <div class="comment-buttons">
       <button onclick="generateComment()">Generate Comment</button>
- 
-    </div>
+     </div>
+
     <textarea id="reportComment" rows="6" cols="100" readonly placeholder="Generated comment will appear here..."></textarea>
     <div class="comment-buttons">
 
@@ -217,12 +222,13 @@
     }
 
     function generateComment() {
-      const name = document.getElementById("studentName").value.trim();
-      const gender = document.getElementById("gender").value;
-      const subject = document.getElementById("subject").value.trim();
-      const unit = document.getElementById("unit").value.trim();
-      const task = document.getElementById("task").value.trim();
-      const mark = document.getElementById("mark").value.trim();
+  const name = document.getElementById("studentName").value.trim();
+  const gender = document.getElementById("gender").value;
+  const subject = document.getElementById("subject").value.trim();
+  const unit = document.getElementById("unit").value.trim();
+  const task = document.getElementById("task").value.trim();
+  const mark = document.getElementById("mark").value.trim();
+  const additionalNotes = document.getElementById("additionalNotes").value.trim();
 
       const pronoun = gender === "he" ? "He" : gender === "she" ? "She" : "They";
 
@@ -237,13 +243,14 @@
       const attendance = getSelectedValues("attendance").join(", ");
 
       let comment = `${name} ${personality ? personality + ", " : ""} in ${subject}.${engagement ? engagement + ", " : ""}${behaviour ? behaviour + ", " : ""}and ${attendance || ""}. `;
-      comment += `During the ${unit} unit, ${pronoun} achieved ${mark}% in the ${task}, and ${achievement || "showed they have an expected level of knowledge and understanding"}. `;
-      comment += `${pronoun} ${tasks}. `;
-      if (strengths) comment += `${pronoun} ${strengths}. `;
-      if (improvement) comment += `${pronoun} ${improvement}. `;
-      if (strategies) comment += `${pronoun} is encouraged to ${strategies}.`;
+  comment += `During the ${unit} unit, ${pronoun} achieved ${mark}% in the ${task}, and ${achievement || "showed they have an expected level of knowledge and understanding"}. `;
+  comment += `${pronoun} ${tasks}. `;
+  if (strengths) comment += `${pronoun} ${strengths}. `;
+  if (improvement) comment += `${pronoun} ${improvement}. `;
+  if (strategies) comment += `${pronoun} is encouraged to ${strategies}.`;
+  if (additionalNotes) comment += ` ${additionalNotes}`;
 
-      document.getElementById("reportComment").value = comment;
+  document.getElementById("reportComment").value = comment;
     }
 
     function resetSelections() {
